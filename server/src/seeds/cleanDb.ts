@@ -4,8 +4,8 @@ import db from '../config/connection.js';
 export default async (modelName: "Question", collectionName: string) => {
   try {
     const model = models[modelName];
-    if (!model) {
-      throw new Error(`Model ${modelName} does not exist`);
+    if (!model || !model.db || !model.db.db) {
+      throw new Error(`Model ${modelName} or its database properties do not exist`);
     }
 
     let modelExists = await model.db.db.listCollections({
