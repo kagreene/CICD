@@ -32,7 +32,12 @@ jobs:
         run: npm run build
 
       - name: Start server
-        run: npm run start
+        run: npm start &
+        env:
+          MONGODB_URI: 'mongodb://localhost:27017/techquiz'
 
-      - name: Run vitest tests
-        run: npm run test
+      - name: Wait for server to be ready
+        run: npx wait-on http://localhost:3001
+
+      - name: Run tests
+        run: npm test
