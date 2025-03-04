@@ -20,8 +20,10 @@ jobs:
         with:
           node-version: 21.x
       
-      - name: Start MongoDB service
-        run: sudo systemctl start mongodb
+      - name: Set up MongoDB
+        uses: supercharge/mongodb-github-action@1.5.0
+        with:
+          mongodb-version: '5.0' # specify the MongoDB version you need
 
       - name: Install dependencies
         run: npm install
