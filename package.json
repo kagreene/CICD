@@ -19,12 +19,14 @@
   "devDependencies": {
     "concurrently": "^8.2.0",
     "cypress": "^13.13.0",
+    "eslint": "^9.21.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "ts-node": "^10.9.2"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.1",
+    "lint": "^0.8.19",
     "vitest": "^2.0.3"
   }
 }
