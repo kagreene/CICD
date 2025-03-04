@@ -1,43 +1,32 @@
 name: Checking Tests
 
-on:
-  pull_request:
-    branches:
-      - develop
-      - staging
+on: [push, pull_request]
 
 jobs:
-  test:
-    name: Checking Tests
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 21.x
-      
-      - name: Set up MongoDB
-        uses: supercharge/mongodb-github-action@1.5.0
-        with:
-          mongodb-version: '5.0' # specify the MongoDB version you need
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
 
-      - name: Install dependencies
-        run: npm install
-      
-      - name: Build App
-        run: npm run build
+    - name: Install dependencies
+      run: npm install
 
-      - name: Start server
-        run: npm start &
-        env:
-          MONGODB_URI: 'mongodb://localhost:27017/techquiz'
+    - name: Start the application
+      run: npm start &
+      env:
+        MONGODB_URI: mongodb://localhost:27017/techquiz
 
-      - name: Wait for server to be ready
-        run: npx wait-on http://localhost:3001
+    - name: Wait for the server to be ready
+      run: npx wait-on http://localhost:3001
 
-      - name: Run tests
-        run: npm test
+    - name: Run Cypress tests
+      run: npm test
+      env:
+        CI: true
