@@ -1,33 +1,50 @@
+import js from '@eslint/js';
+import react from 'eslint-plugin-react';
+import typescript from '@typescript-eslint/eslint-plugin';
+import parser from '@typescript-eslint/parser';
 
-module.exports = {
-  env: {
-    browser: true,
-    es2021: true,
-    node: true,
-  },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
-  ],
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
+export default [
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    languageOptions: {
+      parser: parser,
+      ecmaVersion: 2021,
+      sourceType: 'module',
+      globals: {
+        browser: true,
+        node: true,
+      },
     },
-    ecmaVersion: 12,
-    sourceType: 'module',
-  },
-  plugins: [
-    'react',
-    '@typescript-eslint',
-  ],
-  rules: {
-    'no-undef': 'off',
-  },
-  settings: {
-    react: {
-      version: 'detect',
+    plugins: {
+      react,
+      '@typescript-eslint': typescript,
+    },
+    rules: {
+      ...js.configs.recommended.rules,
+      ...react.configs.recommended.rules,
+      ...typescript.configs.recommended.rules,
+      'no-undef': 'off',
+      'react/react-in-jsx-scope': 'off',
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
     },
   },
-};
+  {
+    files: ['**/*.js'],
+    languageOptions: {
+      ecmaVersion: 2021,
+      sourceType: 'module',
+      globals: {
+        browser: true,
+        node: true,
+      },
+    },
+    rules: {
+      ...js.configs.recommended.rules,
+      'no-undef': 'off',
+    },
+  },
+];
