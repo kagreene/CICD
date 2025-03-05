@@ -13,10 +13,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Test
+
+      - name: Install Dependencies
         run: |
           npm install
-          npm run test
+
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v6
+        with:
+          component: true
+          build: npm run build
+          start: npm run start
 
       - name: Deploy
         # Only run this step if the branch is main
