@@ -9,7 +9,11 @@ export const getRandomQuestions = async (_req: Request, res: Response) => {
       { $sample: { size: 10 } },
       { $project: { __v: 0 } }]);
     res.status(200).json(questions);
-  } catch (err: any) {
-    res.status(500).json({ error: err.message });
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.status(500).json({ error: 'An unknown error occurred' });
+    }
   }
 };

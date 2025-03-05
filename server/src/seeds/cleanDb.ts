@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 import models from '../models/index.js';
 import db from '../config/connection.js';
 

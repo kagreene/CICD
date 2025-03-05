@@ -1,16 +1,9 @@
 name: Cypress Tests
 
-on:
-  push:
-    branches:
-      - main
-      - develop
-      - staging
+on: 
   pull_request:
     branches:
-      - main
-      - develop
-      - staging
+      -develop
 
 
 jobs:
@@ -26,4 +19,4 @@ jobs:
         with:
           component: true
           build: npm run build
-          start: npm run start
+
