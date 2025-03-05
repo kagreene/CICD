@@ -1,29 +1,21 @@
-name: Checking Tests
+name: Cypress Tests
 
-on: [push, pull_request]
+on: 
+  pull_request:
+    branches:
+      -develop
+
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  cypress-run:
+    runs-on: ubuntu-24.04
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Start the application
-      run: npm start &
-      env:
-        MONGODB_URI: mongodb://localhost:27017/techquiz
-
-    - name: Run Cypress tests
-      run: npm test-component
-      env:
-        CI: true
+      - name: Checkout
+        uses: actions/checkout@v4
+      # Install npm dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          build: npm run build
+          start: npm start
